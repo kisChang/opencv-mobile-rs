@@ -1,0 +1,25 @@
+[package]
+name = "opencv-mobile-rs"
+version = "0.1.0"
+edition = "2021"
+description = "Rust bindings for opencv-mobile, a lightweight build of OpenCV optimized for mobile and embedded devices"
+license = "Apache-2.0"
+repository = "https://github.com/kisChang/opencv-mobile-rs"
+readme = "README.md"
+keywords = ["opencv", "computer-vision", "image-processing", "mobile", "embedded"]
+categories = ["asynchronous", "graphics", "multimedia"]
+
+# 排除 opencv-mobile 目录（用户需要自己下载）
+# https://github.com/nihui/opencv-mobile
+exclude = ["opencv-mobile"]
+
+[features]
+default = ["dynamic"]
+dynamic = []
+static-link = []
+
+[build-dependencies]
+cc = "1.0"
+
+[dependencies]
+libc = "0.2"
