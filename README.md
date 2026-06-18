@@ -1,6 +1,7 @@
 # opencv-mobile-rs
 
 [English](./README.md) | [中文](./README.zh-CN.md)
+
 Rust bindings for [opencv-mobile](https://github.com/nihui/opencv-mobile) https://github.com/nihui/opencv-mobile , a lightweight build of OpenCV optimized for mobile and embedded devices.
 
 ## Features
