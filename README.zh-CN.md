@@ -33,6 +33,22 @@ opencv-mobile-rs = "0.1"
 
 ## 使用示例
 
+1. 下载目标架构的库文件
+   https://github.com/nihui/opencv-mobile/releases （仅测试了 4.13+ 版本）
+   例如 opencv-mobile-4.13.0-luckfox-pico.zip
+   解压到你的路径，例如 /lib/openmv-mobile
+
+
+2. 设置构建环境
+
+```
+export OPENCV_MOBILE_PATH=/lib/openmv-mobile
+// 或在 .cargo/config.toml 中配置
+[env]
+OPENCV_MOBILE_PATH = "/lib/openmv-mobile"
+```
+
+3. 示例代码
 ```rust
 use opencv_mobile_rs::*;
 

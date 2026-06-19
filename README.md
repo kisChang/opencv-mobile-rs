@@ -33,6 +33,22 @@ opencv-mobile-rs = "0.1"
 
 ## Usage
 
+1. download target arch libs   
+https://github.com/nihui/opencv-mobile/releases (only tested 4.13+)    
+like opencv-mobile-4.13.0-luckfox-pico.zip   
+unzip to you path like /lib/openmv-mobile
+
+
+2. setting building env
+
+```
+export OPENCV_MOBILE_PATH=/lib/openmv-mobile
+// or write .cargo/config.toml
+[env]
+OPENCV_MOBILE_PATH = "/lib/openmv-mobile"
+```
+
+3. demo source
 ```rust
 use opencv_mobile_rs::*;
 
