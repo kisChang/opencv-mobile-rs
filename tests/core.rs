@@ -4,7 +4,7 @@
 
 use std::ptr::null;
 use opencv_mobile_rs::*;
-
+//
 pub fn create_mat() -> Mat {
     opencv_mobile_rs::create_mat(120, 120, opencv_mobile_rs::CV_8UC1, None)
 }
@@ -291,6 +291,6 @@ fn test_imwrite() {
 #[test]
 fn test_merge() {
     // Test merge with null and zero count
-    let result = unsafe { ocv_merge(std::ptr::null(), 0) };
+    let result = merge(std::ptr::null(), 0);
     assert!(result.is_null(), "merge with null inputs should return null");
 }

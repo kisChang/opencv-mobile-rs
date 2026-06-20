@@ -20,60 +20,60 @@ pub const CV_32FC3: i32 = 21; // 32-bit float, 3 channels
 // Mat 基础操作
 #[link(name = "opencv_wrapper")]
 extern "C" {
-    pub fn ocv_create_mat(height: i32, width: i32, type_: i32, values: *mut f64) -> Mat;
-    pub fn ocv_free(mat: Mat);
-    pub fn ocv_clone(mat: Mat) -> Mat;
-    pub fn ocv_cvtColor(mat: Mat, code: i32) -> Mat;
-    pub fn ocv_resize(mat: Mat, width: i32, height: i32) -> Mat;
-    pub fn ocv_blur(mat: Mat, ksize_width: i32, ksize_height: i32) -> Mat;
-    pub fn ocv_gaussianBlur(mat: Mat, ksize: i32, sigma: f64) -> Mat;
-    pub fn ocv_medianBlur(mat: Mat, ksize: i32) -> Mat;
-    pub fn ocv_bilateralFilter(mat: Mat, d: i32, sigma_color: f64, sigma_space: f64) -> Mat;
-    pub fn ocv_threshold(mat: Mat, thresh: f64, maxval: f64, type_: i32) -> Mat;
-    pub fn ocv_erode(mat: Mat, ksize_width: i32, ksize_height: i32) -> Mat;
-    pub fn ocv_dilate(mat: Mat, ksize_width: i32, ksize_height: i32) -> Mat;
-    pub fn ocv_morphology_open(mat: Mat, ksize_width: i32, ksize_height: i32) -> Mat;
-    pub fn ocv_morphology_close(mat: Mat, ksize_width: i32, ksize_height: i32) -> Mat;
-    pub fn ocv_canny(mat: Mat, threshold1: f64, threshold2: f64) -> Mat;
-    pub fn ocv_sobel(mat: Mat, dx: i32, dy: i32, ksize: i32) -> Mat;
-    pub fn ocv_laplacian(mat: Mat, ksize: i32) -> Mat;
-    pub fn ocv_equalizeHist(mat: Mat) -> Mat;
-    pub fn ocv_warpAffine(mat: Mat, angle: f64, scale: f64) -> Mat;
-    pub fn ocv_rotate(mat: Mat, angle: f64) -> Mat;
-    pub fn ocv_flip(mat: Mat, mode: i32) -> Mat;
-    pub fn ocv_crop(mat: Mat, x: i32, y: i32, width: i32, height: i32) -> Mat;
-    pub fn ocv_merge(mats: *const *const std::ffi::c_void, count: i32) -> Mat;
+    fn ocv_create_mat(height: i32, width: i32, type_: i32, values: *mut f64) -> Mat;
+    fn ocv_free(mat: Mat);
+    fn ocv_clone(mat: Mat) -> Mat;
+    fn ocv_cvtColor(mat: Mat, code: i32) -> Mat;
+    fn ocv_resize(mat: Mat, width: i32, height: i32) -> Mat;
+    fn ocv_blur(mat: Mat, ksize_width: i32, ksize_height: i32) -> Mat;
+    fn ocv_gaussianBlur(mat: Mat, ksize: i32, sigma: f64) -> Mat;
+    fn ocv_medianBlur(mat: Mat, ksize: i32) -> Mat;
+    fn ocv_bilateralFilter(mat: Mat, d: i32, sigma_color: f64, sigma_space: f64) -> Mat;
+    fn ocv_threshold(mat: Mat, thresh: f64, maxval: f64, type_: i32) -> Mat;
+    fn ocv_erode(mat: Mat, ksize_width: i32, ksize_height: i32) -> Mat;
+    fn ocv_dilate(mat: Mat, ksize_width: i32, ksize_height: i32) -> Mat;
+    fn ocv_morphology_open(mat: Mat, ksize_width: i32, ksize_height: i32) -> Mat;
+    fn ocv_morphology_close(mat: Mat, ksize_width: i32, ksize_height: i32) -> Mat;
+    fn ocv_canny(mat: Mat, threshold1: f64, threshold2: f64) -> Mat;
+    fn ocv_sobel(mat: Mat, dx: i32, dy: i32, ksize: i32) -> Mat;
+    fn ocv_laplacian(mat: Mat, ksize: i32) -> Mat;
+    fn ocv_equalizeHist(mat: Mat) -> Mat;
+    fn ocv_warpAffine(mat: Mat, angle: f64, scale: f64) -> Mat;
+    fn ocv_rotate(mat: Mat, angle: f64) -> Mat;
+    fn ocv_flip(mat: Mat, mode: i32) -> Mat;
+    fn ocv_crop(mat: Mat, x: i32, y: i32, width: i32, height: i32) -> Mat;
+    fn ocv_merge(mats: *const *const std::ffi::c_void, count: i32) -> Mat;
 }
 
 // 属性获取
 #[link(name = "opencv_wrapper")]
 extern "C" {
-    pub fn ocv_get_channels(mat: Mat) -> i32;
-    pub fn ocv_get_width(mat: Mat) -> i32;
-    pub fn ocv_get_height(mat: Mat) -> i32;
-    pub fn ocv_get_data(mat: Mat) -> *mut u8;
+    fn ocv_get_channels(mat: Mat) -> i32;
+    fn ocv_get_width(mat: Mat) -> i32;
+    fn ocv_get_height(mat: Mat) -> i32;
+    fn ocv_get_data(mat: Mat) -> *mut u8;
 }
 
 // 图像读写
 #[link(name = "opencv_wrapper")]
 extern "C" {
-    pub fn ocv_imread(filename: *const c_char, flags: i32) -> Mat;
-    pub fn ocv_imwrite(filename: *const c_char, mat: Mat, quality: i32) -> i32;
+    fn ocv_imread(filename: *const c_char, flags: i32) -> Mat;
+    fn ocv_imwrite(filename: *const c_char, mat: Mat, quality: i32) -> i32;
 }
 
 // 文本绘制
 #[link(name = "opencv_wrapper")]
 extern "C" {
-    pub fn ocv_create_font() -> Font;
-    pub fn ocv_destroy_font(font: Font);
-    pub fn ocv_get_text_size(
+    fn ocv_create_font() -> Font;
+    fn ocv_destroy_font(font: Font);
+    fn ocv_get_text_size(
         font: Font,
         text: *const c_char,
         font_scale: f64,
         width: *mut i32,
         height: *mut i32,
     );
-    pub fn ocv_put_text(
+    fn ocv_put_text(
         mat: Mat,
         font: Font,
         text: *const c_char,
@@ -194,6 +194,10 @@ pub fn flip(mat: Mat, mode: i32) -> Mat {
 
 pub fn crop(mat: Mat, x: i32, y: i32, width: i32, height: i32) -> Mat {
     unsafe { ocv_crop(mat, x, y, width, height) }
+}
+
+pub fn merge(mats: *const *const std::ffi::c_void, count: i32) -> Mat {
+    unsafe { ocv_merge(mats, count) }
 }
 
 pub fn imread(filename: &str, flags: i32) -> Option<Mat> {
