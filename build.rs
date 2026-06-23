@@ -149,23 +149,31 @@ fn search_recursive(dir: &Path) -> Option<(PathBuf, String)> {
 
         #[cfg(not(target_os = "windows"))]
         {
+            if filename_str == "libopencv_core.a" || filename_str == "libopencv_core.so" || filename_str == "libopencv_core.dylib" {
+                return Some((dir.to_path_buf(), String::new()));
+            }
             if filename_str.starts_with("libopencv_core.") {
                 let prefix = "libopencv_core.";
-                let suffix = if let Some(s) = filename_str.strip_prefix(prefix) {
-                    if s.ends_with(".a") {
-                        s.trim_end_matches(".a").to_string()
-                    } else if s.starts_with("lib") {
-                        String::new()
+                if let Some(s) = filename_str.strip_prefix(prefix) {
+                    // 移除末尾的 .a 或 .so/.dylib 后缀获取版本号
+                    let suffix = if s.ends_with(".a") {
+                        s.strip_suffix(".a").unwrap_or(s).to_string()
+                    } else if s.ends_with(".so") {
+                        s.strip_suffix(".so").unwrap_or(s).to_string()
+                    } else if s.contains(".so.") {
+                        // 处理 libopencv_core.so.4.5 格式
+                        if let Some(pos) = s.find(".so.") {
+                            s[pos + 4..].to_string()
+                        } else {
+                            s.to_string()
+                        }
+                    } else if s.ends_with(".dylib") {
+                        s.strip_suffix(".dylib").unwrap_or(s).to_string()
                     } else {
                         s.to_string()
-                    }
-                } else {
-                    String::new()
-                };
-                return Some((dir.to_path_buf(), suffix));
-            }
-            if filename_str == "libopencv_core.a" {
-                return Some((dir.to_path_buf(), String::new()));
+                    };
+                    return Some((dir.to_path_buf(), suffix));
+                }
             }
         }
     }
