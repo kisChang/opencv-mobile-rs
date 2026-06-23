@@ -943,6 +943,63 @@ void* ocv_approx_poly_dp(void* curve_ptr, double epsilon, bool closed) {
     return dst;
 }
 
+// ===================== DRAWING FUNCTIONS =====================
+
+// Line - draws a line on the image (in-place)
+void ocv_line(void* mat_ptr, int x1, int y1, int x2, int y2, int b, int g, int r, int thickness, int lineType, int shift) {
+    if (!mat_ptr) return;
+    cv::Mat* mat = static_cast<cv::Mat*>(mat_ptr);
+    cv::line(*mat, cv::Point(x1, y1), cv::Point(x2, y2), cv::Scalar(b, g, r), thickness, lineType, shift);
+}
+
+// Rectangle (two points)
+void ocv_rectangle_pt(void* mat_ptr, int x1, int y1, int x2, int y2, int b, int g, int r, int thickness, int lineType, int shift) {
+    if (!mat_ptr) return;
+    cv::Mat* mat = static_cast<cv::Mat*>(mat_ptr);
+    cv::rectangle(*mat, cv::Point(x1, y1), cv::Point(x2, y2), cv::Scalar(b, g, r), thickness, lineType, shift);
+}
+
+// Rectangle (Rect)
+void ocv_rectangle_rec(void* mat_ptr, int x, int y, int width, int height, int b, int g, int r, int thickness, int lineType, int shift) {
+    if (!mat_ptr) return;
+    cv::Mat* mat = static_cast<cv::Mat*>(mat_ptr);
+    cv::rectangle(*mat, cv::Rect(x, y, width, height), cv::Scalar(b, g, r), thickness, lineType, shift);
+}
+
+// Circle
+void ocv_circle(void* mat_ptr, int x, int y, int radius, int b, int g, int r, int thickness, int lineType, int shift) {
+    if (!mat_ptr) return;
+    cv::Mat* mat = static_cast<cv::Mat*>(mat_ptr);
+    cv::circle(*mat, cv::Point(x, y), radius, cv::Scalar(b, g, r), thickness, lineType, shift);
+}
+
+// Ellipse
+void ocv_ellipse(void* mat_ptr, int x, int y, int width, int height, double angle, double startAngle, double endAngle, int b, int g, int r, int thickness, int lineType, int shift) {
+    if (!mat_ptr) return;
+    cv::Mat* mat = static_cast<cv::Mat*>(mat_ptr);
+    cv::ellipse(*mat, cv::Point(x, y), cv::Size(width, height), angle, startAngle, endAngle, cv::Scalar(b, g, r), thickness, lineType, shift);
+}
+
+// Polylines
+void ocv_polylines(void* mat_ptr, int* xs, int* ys, int* npts, int ncontours, int b, int g, int r, int thickness, int lineType, int shift) {
+    if (!mat_ptr || !xs || !ys || !npts) return;
+    cv::Mat* mat = static_cast<cv::Mat*>(mat_ptr);
+
+    // Convert flat arrays to vector of points for each contour
+    std::vector<std::vector<cv::Point>> contours;
+    int offset = 0;
+    for (int i = 0; i < ncontours; i++) {
+        std::vector<cv::Point> pts;
+        for (int j = 0; j < npts[i]; j++) {
+            pts.push_back(cv::Point(xs[offset + j], ys[offset + j]));
+        }
+        contours.push_back(pts);
+        offset += npts[i];
+    }
+
+    cv::polylines(*mat, contours, true, cv::Scalar(b, g, r), thickness, lineType, shift);
+}
+
 // ===================== HIGHGUI =====================
 
 // Show image (available in opencv-mobile)

@@ -497,6 +497,88 @@ extern "C" {
     );
     fn ocv_convex_hull(points: Mat, clockwise: bool) -> Mat;
     fn ocv_approx_poly_dp(curve: Mat, epsilon: f64, closed: bool) -> Mat;
+
+    // Drawing functions
+    fn ocv_line(
+        mat: Mat,
+        x1: i32,
+        y1: i32,
+        x2: i32,
+        y2: i32,
+        b: i32,
+        g: i32,
+        r: i32,
+        thickness: i32,
+        line_type: i32,
+        shift: i32,
+    );
+    fn ocv_rectangle_pt(
+        mat: Mat,
+        x1: i32,
+        y1: i32,
+        x2: i32,
+        y2: i32,
+        b: i32,
+        g: i32,
+        r: i32,
+        thickness: i32,
+        line_type: i32,
+        shift: i32,
+    );
+    fn ocv_rectangle_rec(
+        mat: Mat,
+        x: i32,
+        y: i32,
+        width: i32,
+        height: i32,
+        b: i32,
+        g: i32,
+        r: i32,
+        thickness: i32,
+        line_type: i32,
+        shift: i32,
+    );
+    fn ocv_circle(
+        mat: Mat,
+        x: i32,
+        y: i32,
+        radius: i32,
+        b: i32,
+        g: i32,
+        r: i32,
+        thickness: i32,
+        line_type: i32,
+        shift: i32,
+    );
+    fn ocv_ellipse(
+        mat: Mat,
+        x: i32,
+        y: i32,
+        width: i32,
+        height: i32,
+        angle: f64,
+        start_angle: f64,
+        end_angle: f64,
+        b: i32,
+        g: i32,
+        r: i32,
+        thickness: i32,
+        line_type: i32,
+        shift: i32,
+    );
+    fn ocv_polylines(
+        mat: Mat,
+        xs: *const i32,
+        ys: *const i32,
+        npts: *const i32,
+        ncontours: i32,
+        b: i32,
+        g: i32,
+        r: i32,
+        thickness: i32,
+        line_type: i32,
+        shift: i32,
+    );
 }
 
 // ===================== HIGHGUI =====================
@@ -999,6 +1081,142 @@ pub fn approx_poly_dp(curve: Mat, epsilon: f64, closed: bool) -> Mat {
     unsafe { ocv_approx_poly_dp(curve, epsilon, closed) }
 }
 
+// Drawing functions
+/// Draw a line segment between two points
+pub fn line(
+    mat: Mat,
+    x1: i32,
+    y1: i32,
+    x2: i32,
+    y2: i32,
+    b: i32,
+    g: i32,
+    r: i32,
+    thickness: i32,
+    line_type: i32,
+    shift: i32,
+) {
+    unsafe {
+        ocv_line(mat, x1, y1, x2, y2, b, g, r, thickness, line_type, shift);
+    }
+}
+
+/// Draw a rectangle with two points (top-left and bottom-right corners)
+pub fn rectangle_pt(
+    mat: Mat,
+    x1: i32,
+    y1: i32,
+    x2: i32,
+    y2: i32,
+    b: i32,
+    g: i32,
+    r: i32,
+    thickness: i32,
+    line_type: i32,
+    shift: i32,
+) {
+    unsafe {
+        ocv_rectangle_pt(mat, x1, y1, x2, y2, b, g, r, thickness, line_type, shift);
+    }
+}
+
+/// Draw a rectangle with position and dimensions
+pub fn rectangle(
+    mat: Mat,
+    x: i32,
+    y: i32,
+    width: i32,
+    height: i32,
+    b: i32,
+    g: i32,
+    r: i32,
+    thickness: i32,
+    line_type: i32,
+    shift: i32,
+) {
+    unsafe {
+        ocv_rectangle_rec(mat, x, y, width, height, b, g, r, thickness, line_type, shift);
+    }
+}
+
+/// Draw a circle
+pub fn circle(
+    mat: Mat,
+    x: i32,
+    y: i32,
+    radius: i32,
+    b: i32,
+    g: i32,
+    r: i32,
+    thickness: i32,
+    line_type: i32,
+    shift: i32,
+) {
+    unsafe {
+        ocv_circle(mat, x, y, radius, b, g, r, thickness, line_type, shift);
+    }
+}
+
+/// Draw an ellipse
+pub fn ellipse(
+    mat: Mat,
+    x: i32,
+    y: i32,
+    width: i32,
+    height: i32,
+    angle: f64,
+    start_angle: f64,
+    end_angle: f64,
+    b: i32,
+    g: i32,
+    r: i32,
+    thickness: i32,
+    line_type: i32,
+    shift: i32,
+) {
+    unsafe {
+        ocv_ellipse(
+            mat, x, y, width, height, angle, start_angle, end_angle, b, g, r, thickness, line_type,
+            shift,
+        );
+    }
+}
+
+/// Draw multiple polylines
+/// - xs: x coordinates for all points (flattened)
+/// - ys: y coordinates for all points (flattened)
+/// - npts: number of points for each contour
+/// - ncontours: number of contours
+pub fn polylines(
+    mat: Mat,
+    xs: &[i32],
+    ys: &[i32],
+    npts: &[i32],
+    ncontours: i32,
+    b: i32,
+    g: i32,
+    r: i32,
+    thickness: i32,
+    line_type: i32,
+    shift: i32,
+) {
+    unsafe {
+        ocv_polylines(
+            mat,
+            xs.as_ptr(),
+            ys.as_ptr(),
+            npts.as_ptr(),
+            ncontours,
+            b,
+            g,
+            r,
+            thickness,
+            line_type,
+            shift,
+        );
+    }
+}
+
 // HighGUI wrappers
 pub fn imshow(name: &str, mat: Mat) {
     unsafe {
@@ -1167,3 +1385,8 @@ pub const COLORMAP_DEEPGREEN: i32 = 21;
 pub const CAP_PROP_FRAME_WIDTH: i32 = 3;
 pub const CAP_PROP_FRAME_HEIGHT: i32 = 4;
 pub const CAP_PROP_FPS: i32 = 5;
+
+// Line types
+pub const LINE_4: i32 = 4;
+pub const LINE_8: i32 = 8;
+pub const LINE_AA: i32 = 16;

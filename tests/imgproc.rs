@@ -452,3 +452,53 @@ fn test_approx_poly_dp() {
     free_mat(curve);
     free_mat(result);
 }
+
+// Drawing function tests
+
+#[test]
+fn test_line() {
+    let mat = imread("tests/test.jpg", IMREAD_COLOR).unwrap();
+    line(mat, 0, 0, 100, 100, 255, 0, 0, 5, LINE_8, 0);
+    free_mat(mat);
+}
+
+#[test]
+fn test_rectangle_pt() {
+    let mat = imread("tests/test.jpg", IMREAD_COLOR).unwrap();
+    rectangle_pt(mat, 10, 10, 100, 100, 0, 255, 0, 1, LINE_8, 0);
+    free_mat(mat);
+}
+
+#[test]
+fn test_rectangle() {
+    let mat = imread("tests/test.jpg", IMREAD_COLOR).unwrap();
+    rectangle(mat, 10, 10, 90, 90, 0, 255, 0, 1, LINE_8, 0);
+    free_mat(mat);
+}
+
+#[test]
+fn test_circle() {
+    let mat = imread("tests/test.jpg", IMREAD_COLOR).unwrap();
+    circle(mat, 60, 60, 30, 0, 0, 255, 1, LINE_8, 0);
+    imshow("fb1", mat);
+    wait_key(30000);
+    free_mat(mat);
+}
+
+#[test]
+fn test_ellipse() {
+    let mat = imread("tests/test.jpg", IMREAD_COLOR).unwrap();
+    ellipse(mat, 60, 60, 40, 20, 0.0, 0.0, 360.0, 255, 255, 0, 1, LINE_8, 0);
+    free_mat(mat);
+}
+
+#[test]
+fn test_polylines() {
+    let mat = imread("tests/test.jpg", IMREAD_COLOR).unwrap();
+    // Triangle: 3 points
+    let xs = vec![30i32, 90, 60];
+    let ys = vec![90i32, 90, 30];
+    let npts = vec![3i32];
+    polylines(mat, &xs, &ys, &npts, 1, 255, 255, 0, 1, LINE_8, 0);
+    free_mat(mat);
+}
