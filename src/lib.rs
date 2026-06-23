@@ -265,7 +265,7 @@ pub type DescriptorMatcher = *mut std::ffi::c_void;
 #[link(name = "opencv_wrapper")]
 extern "C" {
     // ORB
-    pub fn ocv_create_orb(
+    fn ocv_create_orb(
         nfeatures: i32,
         scale_factor: f32,
         nlevels: i32,
@@ -277,14 +277,14 @@ extern "C" {
         fast_threshold: i32,
     ) -> FeatureDetector;
 
-    pub fn ocv_detect_orb(
+    fn ocv_detect_orb(
         detector: FeatureDetector,
         mat: Mat,
         keypoints: *mut std::ffi::c_void,
         keypoint_count: *mut i32,
     );
 
-    pub fn ocv_create_sift(
+    fn ocv_create_sift(
         nfeatures: i32,
         n_octave_layers: i32,
         contrast_threshold: f64,
@@ -292,9 +292,9 @@ extern "C" {
         sigma: f64,
     ) -> FeatureDetector;
 
-    pub fn ocv_create_bfmatcher(norm_type: i32, cross_check: bool) -> DescriptorMatcher;
+    fn ocv_create_bfmatcher(norm_type: i32, cross_check: bool) -> DescriptorMatcher;
 
-    pub fn ocv_match_descriptors(
+    fn ocv_match_descriptors(
         matcher: DescriptorMatcher,
         descriptors1: Mat,
         descriptors2: Mat,
@@ -302,8 +302,8 @@ extern "C" {
         match_count: *mut i32,
     );
 
-    pub fn ocv_draw_keypoints(mat: Mat, keypoints: *const std::ffi::c_void, keypoint_count: i32) -> Mat;
-    pub fn ocv_draw_matches(
+    fn ocv_draw_keypoints(mat: Mat, keypoints: *const std::ffi::c_void, keypoint_count: i32) -> Mat;
+    fn ocv_draw_matches(
         img1: Mat,
         keypoints1: *const std::ffi::c_void,
         img2: Mat,
@@ -317,22 +317,22 @@ extern "C" {
 
 #[link(name = "opencv_wrapper")]
 extern "C" {
-    pub fn ocv_inpaint(src: Mat, inpaint_mask: Mat, inpaint_radius: f64, flags: i32) -> Mat;
-    pub fn ocv_fast_nl_means_denoising(
+    fn ocv_inpaint(src: Mat, inpaint_mask: Mat, inpaint_radius: f64, flags: i32) -> Mat;
+    fn ocv_fast_nl_means_denoising(
         src: Mat,
         h: f32,
         template_window_size: i32,
         search_window_size: i32,
     ) -> Mat;
-    pub fn ocv_edge_preserving_filter(src: Mat, flags: i32, sigma_s: f32, sigma_r: f32) -> Mat;
-    pub fn ocv_stylization(src: Mat, sigma_s: f32, sigma_r: f32) -> Mat;
+    fn ocv_edge_preserving_filter(src: Mat, flags: i32, sigma_s: f32, sigma_r: f32) -> Mat;
+    fn ocv_stylization(src: Mat, sigma_s: f32, sigma_r: f32) -> Mat;
 }
 
 // ===================== VIDEO =====================
 
 #[link(name = "opencv_wrapper")]
 extern "C" {
-    pub fn ocv_calc_optical_flow_pyr_lk(
+    fn ocv_calc_optical_flow_pyr_lk(
         prev_img: Mat,
         next_img: Mat,
         prev_pts: Mat,
@@ -344,7 +344,7 @@ extern "C" {
         epsilon: f64,
     ) -> Mat;
 
-    pub fn ocv_calc_optical_flow_farneback(
+    fn ocv_calc_optical_flow_farneback(
         prev: Mat,
         next: Mat,
         pyr_scale: f64,
@@ -361,13 +361,13 @@ extern "C" {
 
 #[link(name = "opencv_wrapper")]
 extern "C" {
-    pub fn ocv_add(src1: Mat, src2: Mat, mask: Mat) -> Mat;
-    pub fn ocv_subtract(src1: Mat, src2: Mat) -> Mat;
-    pub fn ocv_multiply(src1: Mat, src2: Mat, scale: f64) -> Mat;
-    pub fn ocv_divide(src1: Mat, src2: Mat, scale: f64) -> Mat;
-    pub fn ocv_normalize(src: Mat, alpha: f64, beta: f64, norm_type: i32, dtype: i32) -> Mat;
+    fn ocv_add(src1: Mat, src2: Mat, mask: Mat) -> Mat;
+    fn ocv_subtract(src1: Mat, src2: Mat) -> Mat;
+    fn ocv_multiply(src1: Mat, src2: Mat, scale: f64) -> Mat;
+    fn ocv_divide(src1: Mat, src2: Mat, scale: f64) -> Mat;
+    fn ocv_normalize(src: Mat, alpha: f64, beta: f64, norm_type: i32, dtype: i32) -> Mat;
 
-    pub fn ocv_min_max_loc(
+    fn ocv_min_max_loc(
         mat: Mat,
         min_val: *mut f64,
         max_val: *mut f64,
@@ -377,16 +377,16 @@ extern "C" {
         max_y: *mut i32,
     );
 
-    pub fn ocv_split(mat: Mat, channel_count: *mut i32) -> *mut *mut std::ffi::c_void;
-    pub fn ocv_convert_scale_abs(src: Mat, alpha: f64, beta: f64) -> Mat;
-    pub fn ocv_absdiff(src1: Mat, src2: Mat) -> Mat;
-    pub fn ocv_bitwise_and(src1: Mat, src2: Mat) -> Mat;
-    pub fn ocv_bitwise_or(src1: Mat, src2: Mat) -> Mat;
-    pub fn ocv_bitwise_xor(src1: Mat, src2: Mat) -> Mat;
-    pub fn ocv_bitwise_not(src: Mat) -> Mat;
-    pub fn ocv_compare(src1: Mat, src2: Mat, cmp_op: i32) -> Mat;
-    pub fn ocv_in_range(src: Mat, lowerb: Mat, upperb: Mat) -> Mat;
-    pub fn ocv_copy_make_border(
+    fn ocv_split(mat: Mat, channel_count: *mut i32) -> *mut *mut std::ffi::c_void;
+    fn ocv_convert_scale_abs(src: Mat, alpha: f64, beta: f64) -> Mat;
+    fn ocv_absdiff(src1: Mat, src2: Mat) -> Mat;
+    fn ocv_bitwise_and(src1: Mat, src2: Mat) -> Mat;
+    fn ocv_bitwise_or(src1: Mat, src2: Mat) -> Mat;
+    fn ocv_bitwise_xor(src1: Mat, src2: Mat) -> Mat;
+    fn ocv_bitwise_not(src: Mat) -> Mat;
+    fn ocv_compare(src1: Mat, src2: Mat, cmp_op: i32) -> Mat;
+    fn ocv_in_range(src: Mat, lowerb: Mat, upperb: Mat) -> Mat;
+    fn ocv_copy_make_border(
         src: Mat,
         top: i32,
         bottom: i32,
@@ -401,27 +401,27 @@ extern "C" {
 
 #[link(name = "opencv_wrapper")]
 extern "C" {
-    pub fn ocv_pyr_down(src: Mat, dst_width: i32, dst_height: i32) -> Mat;
-    pub fn ocv_pyr_up(src: Mat, dst_width: i32, dst_height: i32) -> Mat;
-    pub fn ocv_get_gaussian_kernel(ksize: i32, sigma: f64, ktype: i32) -> Mat;
-    pub fn ocv_get_structuring_element(
+    fn ocv_pyr_down(src: Mat, dst_width: i32, dst_height: i32) -> Mat;
+    fn ocv_pyr_up(src: Mat, dst_width: i32, dst_height: i32) -> Mat;
+    fn ocv_get_gaussian_kernel(ksize: i32, sigma: f64, ktype: i32) -> Mat;
+    fn ocv_get_structuring_element(
         shape: i32,
         ksize_width: i32,
         ksize_height: i32,
         anchor_x: i32,
         anchor_y: i32,
     ) -> Mat;
-    pub fn ocv_filter2d(src: Mat, ddepth: i32, kernel: Mat, delta: f64) -> Mat;
-    pub fn ocv_sep_filter2d(src: Mat, ddepth: i32, kernel_x: Mat, kernel_y: Mat, delta: f64) -> Mat;
-    pub fn ocv_scharr(src: Mat, ddepth: i32, dx: i32, dy: i32, scale: f64, delta: f64) -> Mat;
-    pub fn ocv_corner_harris(
+    fn ocv_filter2d(src: Mat, ddepth: i32, kernel: Mat, delta: f64) -> Mat;
+    fn ocv_sep_filter2d(src: Mat, ddepth: i32, kernel_x: Mat, kernel_y: Mat, delta: f64) -> Mat;
+    fn ocv_scharr(src: Mat, ddepth: i32, dx: i32, dy: i32, scale: f64, delta: f64) -> Mat;
+    fn ocv_corner_harris(
         src: Mat,
         block_size: i32,
         ksize: i32,
         k: f64,
         border_type: i32,
     ) -> Mat;
-    pub fn ocv_good_features_to_track(
+    fn ocv_good_features_to_track(
         src: Mat,
         max_corners: i32,
         quality_level: f64,
@@ -430,7 +430,7 @@ extern "C" {
         use_harris_detector: bool,
         k: f64,
     ) -> Mat;
-    pub fn ocv_hough_lines(
+    fn ocv_hough_lines(
         src: Mat,
         rho: f64,
         theta: f64,
@@ -438,7 +438,7 @@ extern "C" {
         srn: f64,
         stn: f64,
     ) -> Mat;
-    pub fn ocv_hough_circles(
+    fn ocv_hough_circles(
         src: Mat,
         method: i32,
         dp: f64,
@@ -448,14 +448,14 @@ extern "C" {
         min_radius: i32,
         max_radius: i32,
     ) -> Mat;
-    pub fn ocv_morphology_ex(src: Mat, op: i32, kernel: Mat) -> Mat;
-    pub fn ocv_get_rotation_matrix2d(
+    fn ocv_morphology_ex(src: Mat, op: i32, kernel: Mat) -> Mat;
+    fn ocv_get_rotation_matrix2d(
         center_x: f64,
         center_y: f64,
         angle: f64,
         scale: f64,
     ) -> Mat;
-    pub fn ocv_warp_perspective(
+    fn ocv_warp_perspective(
         src: Mat,
         m: Mat,
         dst_width: i32,
@@ -464,16 +464,16 @@ extern "C" {
         border_mode: i32,
         border_value: f64,
     ) -> Mat;
-    pub fn ocv_get_affine_transform(src: Mat, dst: Mat) -> Mat;
-    pub fn ocv_get_perspective_transform(src: Mat, dst: Mat) -> Mat;
-    pub fn ocv_invert_affine_transform(m: Mat) -> Mat;
-    pub fn ocv_integral(src: Mat, sdepth: i32) -> Mat;
+    fn ocv_get_affine_transform(src: Mat, dst: Mat) -> Mat;
+    fn ocv_get_perspective_transform(src: Mat, dst: Mat) -> Mat;
+    fn ocv_invert_affine_transform(m: Mat) -> Mat;
+    fn ocv_integral(src: Mat, sdepth: i32) -> Mat;
 
     // CLAHE
-    pub fn ocv_create_clahe(clip_limit: f64, tile_width: i32, tile_height: i32) -> *mut std::ffi::c_void;
-    pub fn ocv_apply_clahe(clahe: *mut std::ffi::c_void, src: Mat, clip_limit: f64) -> Mat;
+    fn ocv_create_clahe(clip_limit: f64, tile_width: i32, tile_height: i32) -> *mut std::ffi::c_void;
+    fn ocv_apply_clahe(clahe: *mut std::ffi::c_void, src: Mat, clip_limit: f64) -> Mat;
 
-    pub fn ocv_adaptive_threshold(
+    fn ocv_adaptive_threshold(
         src: Mat,
         max_value: f64,
         adaptive_method: i32,
@@ -481,13 +481,13 @@ extern "C" {
         block_size: i32,
         c: f64,
     ) -> Mat;
-    pub fn ocv_distance_transform(src: Mat, distance_type: i32, mask_size: i32) -> Mat;
-    pub fn ocv_apply_color_map(src: Mat, colormap: i32) -> Mat;
-    pub fn ocv_match_template(image: Mat, templ: Mat, method: i32) -> Mat;
-    pub fn ocv_find_contours(image: Mat, mode: i32, method: i32) -> Mat;
+    fn ocv_distance_transform(src: Mat, distance_type: i32, mask_size: i32) -> Mat;
+    fn ocv_apply_color_map(src: Mat, colormap: i32) -> Mat;
+    fn ocv_match_template(image: Mat, templ: Mat, method: i32) -> Mat;
+    fn ocv_find_contours(image: Mat, mode: i32, method: i32) -> Mat;
 
-    pub fn ocv_bounding_rect(points: Mat, x: *mut i32, y: *mut i32, width: *mut i32, height: *mut i32);
-    pub fn ocv_min_area_rect(
+    fn ocv_bounding_rect(points: Mat, x: *mut i32, y: *mut i32, width: *mut i32, height: *mut i32);
+    fn ocv_min_area_rect(
         points: Mat,
         center_x: *mut f32,
         center_y: *mut f32,
@@ -495,32 +495,32 @@ extern "C" {
         height: *mut f32,
         angle: *mut f32,
     );
-    pub fn ocv_convex_hull(points: Mat, clockwise: bool) -> Mat;
-    pub fn ocv_approx_poly_dp(curve: Mat, epsilon: f64, closed: bool) -> Mat;
+    fn ocv_convex_hull(points: Mat, clockwise: bool) -> Mat;
+    fn ocv_approx_poly_dp(curve: Mat, epsilon: f64, closed: bool) -> Mat;
 }
 
 // ===================== HIGHGUI =====================
 
 #[link(name = "opencv_wrapper")]
 extern "C" {
-    pub fn ocv_imshow(name: *const c_char, mat: Mat);
-    pub fn ocv_wait_key(delay: i32) -> i32;
+    fn ocv_imshow(name: *const c_char, mat: Mat);
+    fn ocv_wait_key(delay: i32) -> i32;
 
     // VideoCapture
-    pub fn ocv_create_videocapture() -> VideoCapture;
-    pub fn ocv_videocapture_open(cap: VideoCapture, device: i32) -> i32;
-    pub fn ocv_videocapture_is_opened(cap: VideoCapture) -> i32;
-    pub fn ocv_videocapture_get(cap: VideoCapture, prop: i32) -> f64;
-    pub fn ocv_videocapture_set(cap: VideoCapture, prop: i32, value: f64) -> i32;
-    pub fn ocv_videocapture_read(cap: VideoCapture, mat: Mat) -> i32;
-    pub fn ocv_videocapture_release(cap: VideoCapture);
+    fn ocv_create_videocapture() -> VideoCapture;
+    fn ocv_videocapture_open(cap: VideoCapture, device: i32) -> i32;
+    fn ocv_videocapture_is_opened(cap: VideoCapture) -> i32;
+    fn ocv_videocapture_get(cap: VideoCapture, prop: i32) -> f64;
+    fn ocv_videocapture_set(cap: VideoCapture, prop: i32, value: f64) -> i32;
+    fn ocv_videocapture_read(cap: VideoCapture, mat: Mat) -> i32;
+    fn ocv_videocapture_release(cap: VideoCapture);
 
     // VideoWriter
-    pub fn ocv_create_videowriter() -> VideoWriter;
-    pub fn ocv_videowriter_open(writer: VideoWriter, filename: *const c_char, port: i32) -> i32;
-    pub fn ocv_videowriter_is_opened(writer: VideoWriter) -> i32;
-    pub fn ocv_videowriter_write(writer: VideoWriter, mat: Mat);
-    pub fn ocv_videowriter_release(writer: VideoWriter);
+    fn ocv_create_videowriter() -> VideoWriter;
+    fn ocv_videowriter_open(writer: VideoWriter, filename: *const c_char, port: i32) -> i32;
+    fn ocv_videowriter_is_opened(writer: VideoWriter) -> i32;
+    fn ocv_videowriter_write(writer: VideoWriter, mat: Mat);
+    fn ocv_videowriter_release(writer: VideoWriter);
 }
 
 // ===================== High-level Rust API =====================
