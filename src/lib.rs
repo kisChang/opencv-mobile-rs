@@ -1,6 +1,6 @@
 //! OpenCV Rust bindings using C wrapper
 //!
-//! This crate provides bindings to OpenCV through a C wrapper (wrapper.c).
+//! This crate provides bindings to OpenCV through a C wrapper (wrapper.cpp).
 
 use std::os::raw::c_char;
 

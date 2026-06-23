@@ -4,7 +4,6 @@
 
 mod core;
 
-use libc::sleep;
 use opencv_mobile_rs::*;
 
 // Note: These tests may fail in headless environments where no display is available.
